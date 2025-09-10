@@ -6,5 +6,4 @@ User guide
    :caption: User Guide
 
    quickstart
-   data-layout
 
