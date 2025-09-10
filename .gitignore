@@ -1,8 +1,10 @@
 dist/
 __pycache__
 examples/*.png
+/docs/build
 /docs/source/generated/
 /docs/source/gallery/
 /docs/source/sg_execution_times.rst
+/docs/test-results
 examples/out/
 
