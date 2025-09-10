@@ -20,21 +20,26 @@ print(nk)
 gm = nk.cf['grid_mapping']
 nk_crs = pyproj.CRS.from_cf(gm.attrs)
 print(nk_crs)
-# nk_ccrs = ccrs.Projection(nk_crs.to_proj4())
 
+# Converting to Cartopy is not possible to do automatically, unfortunately, so we define it manually:
 ncrs = ccrs.Stereographic(true_scale_latitude=60,
-                            central_latitude=90,
-                            central_longitude=70,
-                            false_easting=3192800,
-                            false_northing=1784000)
+                          central_latitude=90,
+                          central_longitude=70,
+                          false_easting=3192800,
+                          false_northing=1784000)
 #%%
 # Plot northward surface current
 plt.axes(projection=ncrs)
 # plt.axes(projection=ccrs.Mercator())
-nk.isel(time=-1, depth=0).v_northward.plot.imshow(transform=ncrs) # TODO: SUPPLY CORRECT TRANSFORM HERE!
+nk.isel(time=-1, depth=0).v_northward.plot.imshow(
+    transform=ncrs)  # TODO: SUPPLY CORRECT TRANSFORM HERE!
 
-
-plt.scatter(5.32, 60.4, 10, transform=ccrs.PlateCarree(), marker='*', label='Bergen')
+plt.scatter(5.32,
+            60.4,
+            10,
+            transform=ccrs.PlateCarree(),
+            marker='*',
+            label='Bergen')
 
 plt.legend()
 plt.show()
