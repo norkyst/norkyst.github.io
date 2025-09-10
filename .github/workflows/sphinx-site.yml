@@ -34,13 +34,11 @@ jobs:
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
-          channels: conda-forge
           cache-environment: true
           post-cleanup: 'all'
           init-shell: >-
             bash
             powershell
-          extra-specs: python=3.12
 
       - name: Cache cartopy maps
         id: cache-cartopy
