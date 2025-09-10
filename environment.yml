@@ -1,0 +1,22 @@
+name: norkyst
+channels:
+  - conda-forge
+dependencies:
+  - xarray[complete]
+  - pandas>=2
+  - zarr
+  - numpy
+  - scipy
+  - netcdf4
+  - h5netcdf
+  - bottleneck
+  - coloredlogs
+  - matplotlib
+  - cartopy
+  - pyproj
+  - sphinx==8.1
+  - sphinx-gallery>=0.5.0
+  - sphinx-autoapi
+  - sphinx-autosummary-accessors
+  - numpydoc
+  - pydata-sphinx-theme
