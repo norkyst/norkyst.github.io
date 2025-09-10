@@ -20,10 +20,21 @@ print(nk)
 gm = nk.cf['grid_mapping']
 nk_crs = pyproj.CRS.from_cf(gm.attrs)
 print(nk_crs)
-nk_ccrs = ccrs.Projection(nk_crs.to_proj4())
+# nk_ccrs = ccrs.Projection(nk_crs.to_proj4())
 
+ncrs = ccrs.Stereographic(true_scale_latitude=60,
+                            central_latitude=90,
+                            central_longitude=70,
+                            false_easting=3192800,
+                            false_northing=1784000)
 #%%
 # Plot northward surface current
-plt.axes(projection=ccrs.Mercator())
-nk.isel(time=-1, depth=0).v_northward.plot.imshow() # TODO: SUPPLY CORRECT TRANSFORM HERE!
+plt.axes(projection=ncrs)
+# plt.axes(projection=ccrs.Mercator())
+nk.isel(time=-1, depth=0).v_northward.plot.imshow(transform=ncrs) # TODO: SUPPLY CORRECT TRANSFORM HERE!
+
+
+plt.scatter(5.32, 60.4, 10, transform=ccrs.PlateCarree(), marker='*', label='Bergen')
+
+plt.legend()
 plt.show()
