@@ -74,7 +74,7 @@ html_context = {
     "github_user": "norkyst",
     "github_repo": "norkyst.github.io",
     "github_version": "main",
-    "doc_path": "docs",
+    "doc_path": "docs/source",
 }
 
 html_theme_options = {
