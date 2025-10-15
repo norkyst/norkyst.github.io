@@ -38,7 +38,7 @@ jobs:
           post-cleanup: 'all'
           init-shell: >-
             bash
-            powershell
+#            powershell
 
       - name: Cache cartopy maps
         id: cache-cartopy
