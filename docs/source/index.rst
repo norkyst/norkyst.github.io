@@ -5,14 +5,14 @@ Norkyst coastal ocean forecasting system
 
 Norkyst version 3 is now fully operational, and a set of tools for extracting and analysing output data from the model will successively be introduced here. Full model configurations will also be made available. Our aim is to encourage basic and applied research based on model outputs, and also to encourage collaborative developments to improve the forecast system itself.
 
-Usage
------
-
-.. code-block:: python
-
-   import matplotlib.pyplot as plt
-   import xarray as xr
-
+#Usage
+#-----
+#
+#.. code-block:: python
+#
+#   import matplotlib.pyplot as plt
+#   import xarray as xr
+#
 
 Contents
 --------
