@@ -22,4 +22,5 @@ ds = xr.open_dataset(path)
 # %%
 # Example from an arbitrary grid point.
 ds.temperature.isel(time=slice(0,100) ,X=1000, Y=1000, depth=0).plot()
+plt.show()
 
