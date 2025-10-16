@@ -1,5 +1,7 @@
-# %% [markdown]
-# # Timeseries
+"""
+Timeseries
+=============================================================================
+"""
 
 # %% [markdown]
 # This notebook will give examples on how to use data from the Norkyst v3 ocean model to make timeseries. Data is accessed through the Norwegian Meteorological Insitute's THREDDS server: https://thredds.met.no/thredds/catalog.html.
