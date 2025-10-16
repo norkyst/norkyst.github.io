@@ -55,13 +55,8 @@ ds.temperature.isel(time=slice(0,100) ,X=1000, Y=1000, depth=0).plot()
 loc = [12.72, 68.35]  # longitude, latitude
 
 # %% [markdown]
+
 # The coordinates above were randomly chosen and are not necessarily found explicitly on the model grid. Therefore, we need to find the closest point using the `xroms` function `.argsel2d()`.
-
-# %%
-xroms.argsel2d
-
-# %% [markdown]
-# `xroms.argsel2d()` returns the Y and X index making up the latitude and longitude in our dataset. Recall that longitude and latitude is given by `lon(Y, X)` and `lat(Y,X)`.
 
 # %%
 y_idx, x_idx = xroms.argsel2d(ds.lon, ds.lat, loc[0], loc[1])
