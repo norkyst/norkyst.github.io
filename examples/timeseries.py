@@ -58,7 +58,7 @@ loc = [12.72, 68.35]  # longitude, latitude
 # The coordinates above were randomly chosen and are not necessarily found explicitly on the model grid. Therefore, we need to find the closest point using the `xroms` function `.argsel2d()`.
 
 # %%
-xroms.argsel2d?
+xroms.argsel2d
 
 # %% [markdown]
 # `xroms.argsel2d()` returns the Y and X index making up the latitude and longitude in our dataset. Recall that longitude and latitude is given by `lon(Y, X)` and `lat(Y,X)`.
