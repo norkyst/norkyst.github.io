@@ -20,8 +20,6 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import xarray as xr
-import xroms
-import metpy
 
 # %% [markdown]
 # ### Accessing the data
@@ -161,58 +159,4 @@ ax1.set_ylabel('[m/s]')
 lines = line0 + line1
 labels = [l.get_label() for l in lines]
 ax.legend(lines, labels)
-
-# Not very necessary, but removing the default title:
-ax.set_title('')
-ax1.set_title('')
-
-fig.suptitle(f'Surface current speed and wind speed at ({ds.lat[y_idx, x_idx].item():.2f} N, {ds.lon[y_idx, x_idx].item():.2f} E)')
-
-# %% [markdown]
-# Another interesting thing to look at is the direction of the current at a one location over time. To investigate this, we will use the python package `metpy`, which is designed for meteorological usage. Notice that when finding the direction we want to specify `convention='to'` as the default setting of the package is to find the direction of where it is coming from. 
-
-# %%
-unit = metpy.units.units('m/s')
-direction = np.squeeze(metpy.calc.wind_direction(ds.u_eastward[0:100, 0, y_idx, x_idx].values*unit, ds.v_northward[0:100, 0, y_idx, x_idx].values*unit, convention='to'))
-
-# %% [markdown]
-# If the above calculations of speed was too tedious, we can also employ `metpy.calc.wind_speed` and get the same results.
-
-# %%
-speed = np.squeeze(metpy.calc.wind_speed(ds.u_eastward[0:100, 0, y_idx, x_idx].values*unit, ds.v_northward[0:100, 0, y_idx, x_idx].values*unit))
-
-# %% [markdown]
-# The direction as calculated by `metpy` gives us an array with the direction gives as degrees.
-
-# %%
-plt.plot(direction)
-
-# %% [markdown]
-# Now, for a more intuitive way of plotting the direction as a time series we can use `plt.quiver`.
-
-# %%
-time = ds.time[0:100]  # the timesteps we chose for our data
-current_direction = np.radians(direction)  # converting from degrees to radians
-
-# Getting the vector components of the direction
-x = np.cos(current_direction)
-y = np.sin(current_direction)
-
-# %%
-fig, ax = plt.subplots(2,1, sharex=True, gridspec_kw={'height_ratios':[1,5]})
-
-ax[0].quiver(time, np.zeros(len(time)), x, y, width=0.003, scale=15)
-ax[0].set_ylim([0,0.01])
-ax[0].set_yticks([])
-ax[0].set_ylabel('Direction')
-ax[0].axis('off')
-
-ax[1].plot(time, speed)
-ax[1].tick_params(axis='x', rotation=45)
-ax[1].grid()
-
-plt.subplots_adjust(hspace=0)
-
-fig.suptitle(f'Surface current speed and direction at ({ds.lat[y_idx, x_idx].item():.2f} N, {ds.lon[y_idx, x_idx].item():.2f} E)', y=0.9)
-
 
