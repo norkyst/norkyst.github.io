@@ -1,4 +1,4 @@
-Norkyst coastal ocean forecasting system - Model documentation
+Norkyst model documentation
 ========================================
 
 
