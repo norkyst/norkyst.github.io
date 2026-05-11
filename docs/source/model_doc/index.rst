@@ -44,8 +44,8 @@ vertical resolution near the surface ranges from about 0.1 m at 10 m water depth
 approximately 1.0 m at 1000 m depth.
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f01-web.png
-   :width: 90%
-   :align: center
+   :width: 50%
+   :align: left
    :alt: Norkyst v.3 model domain and bathymetry
 
    **Figure 1** — The Norkyst v.3 model domain and bathymetry (green solid line). The outline
@@ -199,7 +199,7 @@ Temperature errors are generally within 1 °C at most depths and months, with sm
 errors near the surface than at depth.
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f02-web.png
-   :width: 85%
+   :width: 50%
    :align: center
    :alt: Comparison of temperature and salinity distributions in the upper 20 m
 
@@ -215,7 +215,7 @@ intermediate layer (100–250 m) shows a persistent cold bias, whereas the deep 
 (>250 m) has a warm bias. These biases are generally small relative to natural variability.
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f03.png
-   :width: 85%
+   :width: 50%
    :align: center
    :alt: Temperature bias heatmap by month and depth
 
@@ -225,7 +225,7 @@ intermediate layer (100–250 m) shows a persistent cold bias, whereas the deep 
    *(Christensen et al., 2026, Fig. 3)*
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f04.png
-   :width: 85%
+   :width: 50%
    :align: center
    :alt: Salinity bias heatmap by month and depth
 
@@ -236,7 +236,7 @@ intermediate layer (100–250 m) shows a persistent cold bias, whereas the deep 
    *(Christensen et al., 2026, Fig. 4)*
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f05.png
-   :width: 85%
+   :width: 50%
    :align: center
    :alt: Temperature RMSE heatmap by month and depth
 
@@ -246,7 +246,7 @@ intermediate layer (100–250 m) shows a persistent cold bias, whereas the deep 
    *(Christensen et al., 2026, Fig. 5)*
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f06.png
-   :width: 85%
+   :width: 50%
    :align: center
    :alt: Salinity RMSE heatmap by month and depth
 
@@ -264,7 +264,7 @@ The coastal zone evaluation uses temperature and salinity profiles from seven
 2012–2023. Validation focuses on 10 m (surface layer) and 150 m (intermediate layer).
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f07-web.png
-   :width: 85%
+   :width: 50%
    :align: center
    :alt: Taylor diagram for coastal hydrographic stations
 
@@ -283,7 +283,7 @@ the station **Ytre Utsira** (southern Norway) illustrates the high quality of th
 surface-layer simulation:
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f08-high-res.png
-   :width: 90%
+   :width: 50%
    :align: center
    :alt: Salinity and temperature time series at Ytre Utsira, 10 m depth
 
@@ -300,7 +300,7 @@ challenging location where the model overestimates temperature variability and
 underestimates salinity:
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f09-high-res.png
-   :width: 90%
+   :width: 50%
    :align: center
    :alt: Salinity and temperature time series at Skrova, 150 m depth
 
@@ -326,7 +326,7 @@ et al. (2020), model results are rated "good" for **78 %**, **75 %** and **90 %*
 time at 10, 30 and 100 m depths respectively.
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f10-high-res.png
-   :width: 90%
+   :width: 50%
    :align: center
    :alt: Along-fjord current time series at Hardangerfjord East
 
@@ -345,7 +345,7 @@ hydrography at 3 m depth with deviations typically less than one unit in both te
 and salinity. At 100 m depth a slight cold and fresh bias is present.
 
 .. figure:: https://gmd.copernicus.org/articles/19/2785/2026/gmd-19-2785-2026-f11.png
-   :width: 90%
+   :width: 50%
    :align: center
    :alt: Temperature and salinity time series at H2 in the Hardangerfjord
 
