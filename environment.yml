@@ -15,6 +15,7 @@ dependencies:
   - matplotlib
   - cartopy
   - pyproj
+  - pyresample
   - cf_xarray
   - sphinx==8.1
   - sphinx-gallery>=0.5.0
