@@ -229,7 +229,8 @@ ax.clabel(cs, inline=True, fontsize=8)
 ax.set_ylim(5, 20)
 ax.set_xlim(5, 36)
 ax.set_xlabel("Absolute Salinity")
-ax.set_ylabel("Conservative Temperature")
+ax.set_ylabel(r'Conservative temperature $[C^{\degree}]$')
+
 
 # --------------------------------------------------
 # Colorbar with class names
@@ -370,7 +371,7 @@ ax.clabel(cs, inline=True, fontsize=8)
 ax.set_ylim(5, 20)
 ax.set_xlim(5, 36)
 ax.set_xlabel("Absolute Salinity")
-ax.set_ylabel("Conservative Temperature")
+ax.set_ylabel(r'Conservative temperature $[C^{\degree}]$')
 
 # --------------------------------------------------
 # Colorbar with class names

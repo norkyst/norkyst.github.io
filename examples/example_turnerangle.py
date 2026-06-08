@@ -77,18 +77,18 @@ fig, ax1 = plt.subplots()
 
 #plt.scatter(Tu_angle[index,:], zout, label='Tu')
 ax1.plot(CT[index,:], ds.z_rho[index,:], c='k', lw=2);
-ax1.set_xlabel('Temperature', color='k')
-#plt.scatter(ds_interp.temp[index,:], ds_interp.depth[index,:], label='Interpolated Temp', c='r');
+ax1.set_xlabel(r'Conservative temperature $[C^{\degree}]$', color='k')
+ax1.set_ylabel('Depth [m]', color='k')
 
 ax2 = ax1.twiny()  # instantiate a second Axes that shares the same x-axis
-ax2.set_xlabel('Salinity', color='r')
+ax2.set_xlabel('Absolute salinity', color='r')
 ax2.plot(SA[index,:], ds.z_rho[index,:], c='r', lw=2);
 ax2.tick_params(axis='x', labelcolor='r')
 fig.tight_layout()
 
 ax3 = ax1.twiny()  # instantiate a second Axes that shares the same x-axis
 ax3.spines["top"].set_position(("axes", 1.2))
-ax3.set_xlabel('Density', color='c')
+ax3.set_xlabel(r'Density $[\text{kg/m}^{3}]$', color='c')
 ax3.plot(rho0[index,:] - 1000, ds.z_rho[index,:], c='c', lw=2);
 ax3.tick_params(axis='x', labelcolor='c')
 fig.tight_layout()
@@ -415,7 +415,7 @@ pcm = ax.contourf(
 )
 
 # Define colorbar
-cbar = plt.colorbar(pcm, ax=ax, label="Temperature")
+cbar = plt.colorbar(pcm, ax=ax, label=r"Potential temperature [C$^{\degree}$]")
 cbar.ax.locator_params(nbins=5)
 
 
