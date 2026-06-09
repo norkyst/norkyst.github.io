@@ -213,10 +213,10 @@ print(total_percent_class)
 # Turner Angle Cross-Section
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# We calculate here the Turner Angle for the cross-section used in Example xxx
+# We calculate here the Turner Angle for the cross-section used in :ref:`Cross-section notebook <sphx_glr_gallery_example_cross.py>`.
 #
 
-path_s = '/home/victorm/norkyst.github.io/examples/datasets/transect_scoord.nc'
+path_s = './datasets/transect_scoord.nc'
 ds_s = xr.open_dataset(path_s, engine='netcdf4')
 
 Zo_rho = (ds_s.hc * ds_s.s_rho + ds_s.Cs_r * ds_s.h) / (ds_s.hc + ds_s.h)
