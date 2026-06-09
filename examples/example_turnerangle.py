@@ -13,7 +13,7 @@ Calculate and plot Turner Angle
 # - _If −45° < Tu < 45°, the column is statically stable._
 # - _If −90° < Tu < −45°, the column is unstable to diffusive convection._
 # - _If 45° < Tu < 90°, the column is unstable to salt fingering._
-# - _If −90° > Tu or Tu > 90°, the column is statically unstable to Rayleigh–Taylor instability._
+# - _If −90° > Tu or Tu > 90°, the column is statically unstable to Rayleigh–Taylor instability (Unstable)._
 # 
 # In this notebook we will be fetching a subset of the full output file and plot the median vertical distribution of the Turner angle in addition to the 5, 25, 75, and 95 percentiles. A plot is made highlighting the different regimes listed above. Note that our code uses the `gsw` package that is based on TEOS-10, and hence we do a conversion inside the `tad` function called below from potential temperature and practical salinity to conservative temperature and absolute salinity.
 # 
@@ -29,6 +29,10 @@ import matplotlib.patches as patches
 import cmocean.cm as cmo
 import xarray as xr
 import gsw
+
+from scipy.interpolate import griddata
+from pyproj import Geod
+from scipy.interpolate import interp1d
 
 # Load the dataset and resample to daily means
 ds = xr.open_dataset('./datasets/timeseries_norkyst_2025_deep.nc', engine='netcdf4').resample(ocean_time="D").mean(dim="ocean_time") 
@@ -51,9 +55,6 @@ temp = ds.temp
 ################################################
 # Convert temperature and salinity
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-from scipy.interpolate import interp1d
 
 maxdepth = -450.0
 resolution = 200
@@ -114,65 +115,6 @@ for i in range(SA.shape[0]):
     Tu_angle[i,:] = f(zout)
     N2[i,:] = f_n2(zout)
 
-#################################################
-# Plot Turner Angle classification
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-
-# Example Turner angle points in degree
-turner_angles = Tu_angle[index,:]  # Using one specific time step
-
-# Convert Turner angles to radians (for polar plotting)
-angles_radians = np.radians(turner_angles)
-
-# Colors based on the stability criteria:
-# Tu < -90° or Tu > 90°: Rayleigh-Taylor instability (red)
-# -90° <= Tu < -45°: Unstable to diffusive convection (blue)
-# -45° <= Tu <= 45°: Statically stable (green)
-# 45° < Tu <= 90°: Unstable to salt fingering (orange)
-colors = []
-for angle in turner_angles:
-    if angle < -90 or angle > 90:
-        colors.append('red')  # Rayleigh-Taylor instability
-    elif -90 <= angle < -45:
-        colors.append('blue')  # Diffusive convection
-    elif -45 <= angle <= 45:
-        colors.append('green')  # Statically stable
-    elif 45 < angle <= 90:
-        colors.append('orange')  # Salt fingering
-    else:
-        colors.append('gray')  # Default color for any unexpected values
-
-# Create the polar plot
-fig, ax = plt.subplots(figsize=(7, 7), subplot_kw={'projection': 'polar'})
-
-# Scatter plot with color-coded points
-ax.scatter(angles_radians, np.ones_like(angles_radians), c=colors, s=100)
-
-# Keep the full circle intact and customize the angle labels
-ax.set_theta_zero_location('N')
-ax.set_theta_direction('clockwise')
-
-ax.set_yticks([])
-ax.set_xticks(np.array([-90, -45, 0, 45, 90])/180*np.pi)
-ax.set_thetalim(-np.pi, np.pi)
-
-# Add a legend for color-coded stability regions
-legend_labels = {
-    'green': 'Statically Stable',
-    'blue': 'Diffusive Convection',
-    'orange': 'Salt Fingering',
-    'red': 'Rayleigh–Taylor Instability'
-}
-handles = [
-    plt.Line2D([0], [0], marker='o', color=color, label=label, markersize=10, linestyle='None')
-    for color, label in legend_labels.items()
-]
-ax.legend(handles=handles, loc='upper right', bbox_to_anchor=(1.3, 1.1))
-
-# Show the plot
-plt.show()
-
 ########################################
 # Plot the quartiles
 # ~~~~~~~~~~~~~~~~~~
@@ -218,10 +160,10 @@ import pandas as pd
 # --- 1. Turner angle classification ---
 classes = np.full(Tu_angle.shape, np.nan, dtype=object)
 
-classes[(Tu_angle >= -45) & (Tu_angle <= 45)] = 'S.S'   # Statically Stable
+classes[(Tu_angle >= -45) & (Tu_angle <= 45)] = 'D.S'   # Doubly Stable
 classes[(Tu_angle < -45) & (Tu_angle >= -90)] = 'D-C'   # Diffusive Convection
 classes[(Tu_angle > 45) & (Tu_angle <= 90)] = 'S.F'     # Salt Fingering
-classes[(Tu_angle > 90) | (Tu_angle < -90)] = 'R-T.I'   # Rayleigh–Taylor Instability
+classes[(Tu_angle > 90) | (Tu_angle < -90)] = 'U'   # Unstable
 
 # --- 2. Expand depth to match (time, depth) ---
 depth_2d = np.broadcast_to(zout, Tu_angle.shape)
@@ -274,7 +216,7 @@ print(total_percent_class)
 # We calculate here the Turner Angle for the cross-section used in Example xxx
 #
 
-path_s = './datasets/transect_scoord.nc'
+path_s = '/home/victorm/norkyst.github.io/examples/datasets/transect_scoord.nc'
 ds_s = xr.open_dataset(path_s, engine='netcdf4')
 
 Zo_rho = (ds_s.hc * ds_s.s_rho + ds_s.Cs_r * ds_s.h) / (ds_s.hc + ds_s.h)
@@ -282,12 +224,16 @@ z_rho = ds_s.zeta + (ds_s.zeta + ds_s.h) * Zo_rho
 
 ds_s.coords["z_rho"] = z_rho.transpose()
 
+# Convert salinity and temperature from ROMS to TEOS-10 standards
+p = gsw.conversions.p_from_z(ds_s.z_rho, 57.5) # Lat
+SA = gsw.conversions.SA_from_SP(ds_s.salt, p, 8, 57.5) # Lon, Lat
+CT = gsw.conversions.CT_from_pt(SA, ds_s.temp)
+rho0 = gsw.pot_rho_t_exact(SA, CT, p, 0) # Ref level
+
+
 ##################################################
 # Plot temperature along the cross-section
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-from scipy.interpolate import griddata
-from pyproj import Geod
 
 def compute_transect_distance(lons, lats):
     """
@@ -318,123 +264,125 @@ def compute_transect_distance(lons, lats):
 
     return distance_km
 
+def interpolate_section(var, z_rho, dist, h,
+                        nx=100, nz=400,
+                        method="linear"):
+
+    # Build scattered points
+    dist2d = np.tile(dist, (var.shape[0], 1))
+
+    points = np.column_stack([
+        dist2d.ravel(),
+        z_rho.ravel()
+    ])
+
+    values = var.ravel()
+
+    # Remove NaNs
+    mask = np.isfinite(values) & np.isfinite(points[:, 1])
+
+    points = points[mask]
+    values = values[mask]
+
+    # Target grid
+    dist_grid = np.linspace(dist.min(), dist.max(), nx)
+
+    z_grid = np.linspace(
+        np.nanmin(z_rho),
+        0,
+        nz
+    )
+
+    distg, zg = np.meshgrid(dist_grid, z_grid)
+
+    # Interpolate
+    var_grid = griddata(
+        points,
+        values,
+        (distg, zg),
+        method=method
+    )
+
+    # Bathymetry
+    h_grid = np.interp(
+        dist_grid,
+        dist,
+        -h
+    )
+
+    # Mask below bottom
+    var_grid[zg < h_grid[None, :]] = np.nan
+
+    return distg, zg, var_grid, dist_grid, h_grid
 
 distance_km = compute_transect_distance(ds_s.lon_rho.values, ds_s.lat_rho.values)
 
-
-# -----------------------------------
-# SELECT TIME
-# -----------------------------------
-
-temp = ds_s.temp.values
-
-# -----------------------------------
-# DISTANCE
-# -----------------------------------
-
-dist = distance_km
-
-# -----------------------------------
-# TRUE DEPTHS
-# -----------------------------------
 z_rho = ds_s.z_rho.values
+h = ds_s.h.values
 
-# -----------------------------------
-# BUILD SCATTERED POINTS
-# -----------------------------------
-
-dist2d = np.tile(dist, (temp.shape[0], 1))
-
-points = np.column_stack([
-    dist2d.ravel(),
-    z_rho.ravel()
-])
-
-values = temp.ravel()
-
-# remove NaNs
-mask = np.isfinite(values) & np.isfinite(points[:,1])
-
-points = points[mask]
-values = values[mask]
-
-# -----------------------------------
-# TARGET GRID
-# -----------------------------------
-
-dist_grid = np.linspace(dist.min(), dist.max(), 100)
-
-z_grid = np.linspace(
-    np.nanmin(z_rho),
-    0,
-    400
-)
-
-distg, zg = np.meshgrid(dist_grid, z_grid)
-
-# -----------------------------------
-# INTERPOLATE
-# -----------------------------------
-
-temp_grid = griddata(
-    points,
-    values,
-    (distg, zg),
-    method="linear"
-)
-
-# -----------------------------------
-# BATHYMETRY
-# -----------------------------------
-
-h = -ds_s.h.values
-
-h_grid = np.interp(
-    dist_grid,
-    dist,
+distg, zg, temp_grid, dist_grid, h_grid = interpolate_section(
+    ds_s.temp.values,
+    z_rho,
+    distance_km,
     h
 )
 
-# mask below seafloor
-temp_grid[zg < h_grid[None, :]] = np.nan
-
-# -----------------------------------
-# PLOT
-# -----------------------------------
-
-fig, ax = plt.subplots(figsize=(12,5))
-
-pcm = ax.contourf(
-    distg,
-    zg,
-    temp_grid,
-    levels=np.linspace(6, 8, 41),
-    shading="auto",
-    cmap=cmo.thermal,
-    extend="both"
+_, _, salt_grid, _, _ = interpolate_section(
+    ds_s.salt.values,
+    z_rho,
+    distance_km,
+    h
 )
 
-# Define colorbar
-cbar = plt.colorbar(pcm, ax=ax, label=r"Potential temperature [C$^{\degree}$]")
-cbar.ax.locator_params(nbins=5)
-
-
-# fill land
-ax.fill_between(
-    dist_grid,
-    h_grid,
-    zg.min()-20,
-    color="k",
-    alpha=0.3
+_, _, dens_grid, _, _ = interpolate_section(
+    rho0.values - 1000,
+    z_rho,
+    distance_km,
+    h   
 )
 
-# Set labels
-ax.set_ylim(-480, 0)
-ax.set_xlabel("Distance (km)")
-ax.set_ylabel("Depth (m)")
+fig, axes = plt.subplots(
+    3, 1,
+    figsize=(12, 10),
+    sharex=True
+)
 
-plt.tight_layout()
-plt.show()
+fields = [
+    (temp_grid, cmo.thermal, np.linspace(6, 8, 41), "Temperature"),
+    (salt_grid, cmo.haline,  np.linspace(33, 35, 41), "Salinity"),
+    (dens_grid, cmo.dense,   np.linspace(25, 28, 41), "Density")
+]
+
+for ax, (field, cmap, levels, title) in zip(axes, fields):
+
+    pcm = ax.contourf(
+        distg,
+        zg,
+        field,
+        levels=levels,
+        cmap=cmap,
+        extend="both"
+    )
+
+    ax.fill_between(
+        dist_grid,
+        h_grid,
+        zg.min() - 20,
+        color="k",
+        alpha=0.3
+    )
+
+    ax.set_title(title)
+    ax.set_ylim(-480, 0)
+
+    plt.colorbar(pcm, ax=ax)
+
+axes[0].set_ylabel("Depth [m]")
+axes[1].set_ylabel("Depth [m]")
+
+
+axes[-1].set_xlabel("Distance [km]")
+axes[-1].set_ylabel("Depth [m]")
 
 ###############################################
 # Calculate Turner Angle for the cross-section
@@ -527,9 +475,9 @@ cbar = plt.colorbar(
 
 cbar.ax.set_yticklabels([
     'Diffusive\nConvection',
-    'Statically\nStable',
+    'Doubly\nStable',
     'Salt\nFingering',
-    'Rayleigh-Taylor'
+    'Unstable'
 ])
 
 ax.set_ylim(-480, 0)
