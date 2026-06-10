@@ -278,7 +278,7 @@ pcm = ax.pcolormesh(
 )
 
 cb = plt.colorbar(pcm, ax=ax)
-cb.set_label("Temperature")
+cb.set_label(r"Potential temperature [C$^{\degree}$]")
 
 ax.set_xlabel("Distance (km)")
 ax.set_ylabel("Depth (m)")
@@ -417,7 +417,7 @@ pcm = ax.contourf(
 )
 
 # Define colorbar
-cbar = plt.colorbar(pcm, ax=ax, label="Temperature")
+cbar = plt.colorbar(pcm, ax=ax, label=r"Potential temperature [C$^{\degree}$]")
 cbar.ax.locator_params(nbins=5)
 
 
