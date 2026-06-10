@@ -6,14 +6,19 @@ Calculate and plot Turner Angle
 #############################################################################################################################################################################################################################
 # Here we illustrate how to extract data on the native ROMS model grid, and to plot the statistics of the vertical distribution of the so-called Turner angle. The Turner angle was proposed by Ruddick [1], and is defined as
 # 
-# $$\mathrm{Tu} = \mathrm{tan}^{-1}\left(\alpha\frac{\partial \theta}{\partial z}-\beta\frac{\partial S}{\partial z}, \alpha\frac{\partial \theta}{\partial z}-\beta\frac{\partial S}{\partial z} \right),$$
+# :math:`\mathrm{Tu} = \tan^{-1}\left(
+# \alpha \frac{\partial \theta}{\partial z}
+# - \beta \frac{\partial S}{\partial z},
+# \alpha \frac{\partial \theta}{\partial x}
+# - \beta \frac{\partial S}{\partial x}
+# \right)`
+# where :math:`\theta` is the potential temperature, :math:`S` is the salinity, :math:`\alpha` is the thermal expansion coefficient, and :math:`\beta` is the haline contraction coefficient. The Turner angle can be used to investigate the stability of a water column, and the separate roles of salinity and temperature for this stability. It is related to the density ratio, but is perhaps generally more useful for diagnostics. The `Wikipedia page <https://en.wikipedia.org/wiki/Turner_angle>`_ is informative,
+# and as they say there, the most relevant ranges are:
 # 
-# where $\theta$ is the potential temperature, $S$ is the salinity, $\alpha$ is the thermal expansion coefficient, and $\beta$ is the haline contraction coefficient. The Turner angle can be used to investigate the stability of a water column, and the separate roles of salinity and temperature for this stability. It is related to the density ratio, but is perhaps generally more useful for diagnostics. The [Wikipedia page](https://en.wikipedia.org/wiki/Turner_angle) is informative, and as they say there, the most relevant ranges are
-# 
-# - _If −45° < Tu < 45°, the column is statically stable._
-# - _If −90° < Tu < −45°, the column is unstable to diffusive convection._
-# - _If 45° < Tu < 90°, the column is unstable to salt fingering._
-# - _If −90° > Tu or Tu > 90°, the column is statically unstable to Rayleigh–Taylor instability (Unstable)._
+# - If −45° < Tu < 45°, the column is statically stable.
+# - If −90° < Tu < −45°, the column is unstable to diffusive convection.
+# - If 45° < Tu < 90°, the column is unstable to salt fingering.
+# - If −90° > Tu or Tu > 90°, the column is statically unstable to Rayleigh–Taylor instability (Unstable).
 # 
 # In this notebook we will be fetching a subset of the full output file and plot the median vertical distribution of the Turner angle in addition to the 5, 25, 75, and 95 percentiles. A plot is made highlighting the different regimes listed above. Note that our code uses the `gsw` package that is based on TEOS-10, and hence we do a conversion inside the `tad` function called below from potential temperature and practical salinity to conservative temperature and absolute salinity.
 # 
@@ -23,8 +28,6 @@ Calculate and plot Turner Angle
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import BoundaryNorm, ListedColormap
-from matplotlib.cm import ScalarMappable
-import matplotlib.patches as patches
 
 import cmocean.cm as cmo
 import xarray as xr
