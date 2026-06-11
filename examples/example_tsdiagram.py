@@ -252,7 +252,9 @@ plt.show()
 ##############################################################################################################################
 # As a final example, we will create a T-S diagram for a long time series (whole 2025) extracted from one single grid point over time
 #
-# ![](./figures/fig_ts_roi.png)
+# .. image:: images/fig_ts_roi.png
+#    :width: 600px
+#    :align: center
 #
 
 ds = xr.open_dataset('./datasets/timeseries_norkyst_2025_deep.nc', engine='netcdf4')
