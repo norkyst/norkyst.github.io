@@ -410,8 +410,7 @@ pre-processed before the simulation begins.
    * - Full ROMS model code (Zenodo)
      - `doi:10.5281/zenodo.17046086 <https://doi.org/10.5281/zenodo.17046086>`_
 
-
-Ongoing developments
+Ongoing activities
 ~~~~~~~~~~~~~~~~~~~~~
 
 The Norkyst modeling system is under active development. Current and planned activities
@@ -446,3 +445,87 @@ include the following:
    Although the Norwegian coast is largely ice-free, work is underway to evaluate the
    suitability of a sea ice model recently integrated with the ROMS version used in
    Norkyst, targeting occasional winter ice formation in sheltered fjords.
+
+Upcoming changes
+~~~~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+
+   * - Date 
+     - Summary
+     - Required actions
+
+   * - 2026-11-??
+     - 
+     - None
+
+
+
+
+Change Log
+~~~~~~~~~~~~
+
+.. list-table::
+   :header-rows: 1
+
+   * - Date
+     - Type
+     - Affected members
+     - Summary
+     - Impact
+
+   * - 2026-06-09
+     -  Model upgrade
+     - * Control 
+       * Sulafjorden twoway nested 
+       * Oslofjorden twoway nested
+     - River temperature in Glomma, Drammenselva, Numedalslågen, Skienselva and Tovdalselva corrected according to NVE observations in river input file
+     - Improved sea surface temperature near river outlets for some of the major rivers in south-eastern Norway
+
+   * - 2026-05-27
+     - Model upgrade
+     - * Control 
+       * Sulafjorden twoway nested 
+       * Oslofjorden twoway nested
+     - * Enable WIND_MINUS_CURRENT cpp flag
+     - Improved surface currents and hydrography
+
+   * - 2026-04-16
+     - Bugfix
+     - * Oslofjorden twoway nested
+     - Reset unrealistically high salinity values in deep basins of Oslofjorden
+     - Improved hydrography at depths
+   
+   * - 2026-03-17
+     - * Technical upgrade
+       * Model upgrade
+     - * Control 
+       * Sulafjorden twoway nested 
+       * Oslofjorden twoway nested
+     - * Move production to new HPC facilities
+       * Upgrade model code to ROMS-4.3 (git revision b335132)
+       * Compile and run with parallel-IO
+     - New code base may affect the results. 
+   
+   * - 2026-03-03 
+     - Bugfix
+     - * Control 
+       * Sulafjorden twoway nested 
+       * Oslofjorden twoway nested
+     - Update the 2N2 tide component
+     - Improved tidal forcing
+
+   * - 2025-10-13
+     - Model upgrade
+     - * Control 
+       * Sulafjorden twoway nested 
+       * Oslofjorden twoway nested
+     - Change river input from EHYPE to GLOFAS for rivers outside Norway
+     - Changed river freshwater input
+   
+   * - 2025-10-07
+     - Model upgrade
+     - * Control
+     - Start nudging of salinity and temperature fields towards assimilating model at 2.4km resolution
+     - Improved hydrography 
+
