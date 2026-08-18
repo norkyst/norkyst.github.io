@@ -273,8 +273,7 @@ pcm = ax.pcolormesh(
     temp_grid,
     vmin=6,
     vmax=8,
-    cmap=cmo.thermal,
-    shading="auto"
+    cmap=cmo.thermal
 )
 
 cb = plt.colorbar(pcm, ax=ax)
@@ -411,7 +410,6 @@ pcm = ax.contourf(
     zg,
     temp_grid,
     levels=np.linspace(6, 8, 41),
-    shading="auto",
     cmap=cmo.thermal,
     extend="both"
 )
