@@ -18,3 +18,9 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
+
+
+
+Contact
+=======
+Questions about the Norkyst model system can be sent to ``norkyst@met.no``
