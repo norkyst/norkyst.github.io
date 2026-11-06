@@ -12,7 +12,6 @@ Contents
    :maxdepth: 2
 
    model_doc/index
-   user_guide/index
    gallery/index
 
 Indices and tables
