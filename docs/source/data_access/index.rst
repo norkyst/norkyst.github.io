@@ -17,7 +17,7 @@ Model results
    * - Operational forecast archive control member (from 2024)
      - `thredds.met.no <https://thredds.met.no/thredds/catalog/fou-hi/norkystv3.html?dataset=norkystv3_800m_m00_be>`_
    * - Operational forecast archive high resolution Sulafjorden (from 2024)
-     - `thredds.met.no <https://thredds.met.no/thredds/catalog/fou-hi/norkystv3.html?dataset=norkystv3_800m_m70_be>`_
+     - `thredds.met.no <https://thredds.met.no/thredds/catalog/fou-hi/norkystv3.html?dataset=norkystv3_160m_m70_be>`_
    * - Operational forecast archive high resolution Oslofjorden (from 2024)
      - `thredds.met.no <https://thredds.met.no/thredds/catalog/fou-hi/norkystv3.html?dataset=norkystv3_160m_m71_be>`_
    * - Hindcast archive (from 2012)
@@ -38,7 +38,7 @@ Norkyst model code configuration
    * - Resource
      - Link
    * - Model setup and configuration files (github)
-     - `github.com/norkyst <https://github.com/norkyst/norkyst_operational>`_
+     - `github.com/norkyst <https://github.com/norkyst/norkyst-operational>`_
    * - ROMS configuration files (Zenodo)
      - `doi:10.5281/zenodo.16810677 <https://doi.org/10.5281/zenodo.16810677>`_
    * - Analysis and plotting scripts (Zenodo)
