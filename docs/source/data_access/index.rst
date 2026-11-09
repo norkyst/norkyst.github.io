@@ -1,6 +1,10 @@
 
 Data and code availability
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================
+
+
+Model results
+~~~~~~~~~~~~~
 
 .. list-table::
    :widths: 35 65
@@ -20,8 +24,21 @@ Data and code availability
      - `thredds.met.no <https://thredds.met.no/thredds/catalog/romshindcast/norkyst_v3/catalog.html>`_
    * - API (selected fields)
      - `api.met.no <https://api.met.no/>`_
+
+
+
+Norkyst model code configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. list-table::
+   :widths: 35 65
+   :header-rows: 1
+
+
+   * - Resource
+     - Link
    * - Model setup and configuration files (github)
-        - `github.com <https://github.com/norkyst/norkyst_operational>`_
+     - `github.com/norkyst <https://github.com/norkyst/norkyst_operational>`_
    * - ROMS configuration files (Zenodo)
      - `doi:10.5281/zenodo.16810677 <https://doi.org/10.5281/zenodo.16810677>`_
    * - Analysis and plotting scripts (Zenodo)
