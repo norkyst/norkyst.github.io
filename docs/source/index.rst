@@ -13,6 +13,7 @@ Contents
 
    model_doc/index
    gallery/index
+   data_access/index
 
 Indices and tables
 ==================
