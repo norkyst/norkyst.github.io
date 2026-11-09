@@ -355,7 +355,7 @@ and salinity. At 100 m depth a slight cold and fresh bias is present.
    *(Christensen et al., 2026, Fig. 11)*
 
 
-Operational setup and data access
+Operational setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The operational implementation of Norkyst runs **once per day** on the high-performance
