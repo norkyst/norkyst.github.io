@@ -2,6 +2,11 @@
 Data and code availability
 ==========================
 
+   For any use of model results or applications building upon the Norkyst model, please cite it as:
+
+   * Christensen, K. H., Albretsen, J., Asplin, L., Frøysa, H. G., Gusdal, Y., Iversen, S. C., Jensen, M. F., Johnsen, I. A., Kristensen, N. M., Sævik, P. N., Sandvik, A. D., Simonsen, M., Skarðhamar, J., Sperrevik, A. K., and Trodahl, M.: “Norkyst” version 3: the coastal ocean forecasting system for Norway, Geosci. Model Dev., 19, 2785–2798, `<https://doi.org/10.5194/gmd-19-2785-2026>`_, 2026.
+    
+
 
 Model results
 ~~~~~~~~~~~~~
